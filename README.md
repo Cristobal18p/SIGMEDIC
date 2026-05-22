@@ -1,4 +1,4 @@
-# 🏥 Sistema de Citas Médicas - Clínica Santana
+# 🏥 Sistema Gestión de Citas Médicas
 
 Sistema web completo para la gestión de citas médicas, pacientes, médicos y notificaciones automatizadas por correo electrónico.
 
