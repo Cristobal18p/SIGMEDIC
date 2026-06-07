@@ -1,0 +1,11 @@
+{
+  "name": "sigmedic",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix Frontend run build && npm --prefix Backend run start",
+    "dev:backend": "npm --prefix Backend run dev",
+    "dev:frontend": "npm --prefix Frontend run dev",
+    "install:all": "npm --prefix Backend install && npm --prefix Frontend install"
+  }
+}
