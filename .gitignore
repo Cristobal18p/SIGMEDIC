@@ -3,3 +3,14 @@ node_modules/
 
 # Variables de entorno
 .env
+
+# Build y Producción
+Frontend/build/
+Frontend/dist/
+dist/
+build/
+
+# Archivos de Sistema e IDEs
+.DS_Store
+.vscode/
+.idea/
