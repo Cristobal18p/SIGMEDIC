@@ -107,7 +107,7 @@ export function ConsultaEstado({ onBuscar, onCancelar }: ConsultaEstadoProps) {
                           ? "#16a34a"
                           : citaConsultada.estado_cita === "pendiente"
                           ? "#ca8a04"
-                          : citaConsultada.estado_cita === "atendido"
+                          : citaConsultada.estado_cita === "atendida"
                           ? "#2563eb"
                           : "#dc2626",
                     }}
@@ -149,7 +149,7 @@ export function ConsultaEstado({ onBuscar, onCancelar }: ConsultaEstadoProps) {
                 )}
 
                 {/* Confirmada o Atendida */}
-                {["confirmada", "atendido"].includes(
+                {["confirmada", "atendida"].includes(
                   citaConsultada.estado_cita.toLowerCase()
                 ) && (
                   <>
@@ -178,8 +178,9 @@ export function ConsultaEstado({ onBuscar, onCancelar }: ConsultaEstadoProps) {
                         Médico:
                       </span>
                       <span className="text-sm font-semibold">
-                        {"Dr/a " + citaConsultada.medico_nombre ||
-                          "Por asignar"}
+                        {citaConsultada.medico_nombre 
+                          ? `Dr/a ${citaConsultada.medico_nombre}` 
+                          : "Por asignar"}
                       </span>
                     </div>
 

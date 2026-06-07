@@ -54,7 +54,7 @@ export default defineConfig({
     outDir: 'build',
   },
   server: {
-    port: 5173,  // Puerto del frontend (diferente al backend)
+    port: 5173,  
     open: true,
   },
 });

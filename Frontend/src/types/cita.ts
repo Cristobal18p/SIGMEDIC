@@ -35,6 +35,7 @@ export interface CreateCita {
 // Portal de Paciente, Recepcion (Cita del dia, Todas la citas, citas pendientes), Medico, 
 export interface CitaDetalle {
   id_cita: string;
+  id_paciente?: string;
 
   numero_seguimiento: string;
   estado_cita: "pendiente" | "confirmada" | "atendida" | "cancelada";
