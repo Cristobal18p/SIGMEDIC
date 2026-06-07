@@ -61,9 +61,7 @@ export const createUsuario = async (data) => {
   };
 };
 
-/* ============================================================
-   ACTUALIZAR USUARIO
-   ============================================================ */
+// ACTUALIZAR USUARIO
 
 export const updateUsuario = async (id, data) => {
   const { nombre_usuario, nombre, apellido, contrasena, rol, estado } = data;
@@ -108,9 +106,7 @@ export const updateUsuario = async (id, data) => {
   }
 };
 
-/* ============================================================
-   ELIMINAR USUARIO
-   ============================================================ */
+// ELIMINAR USUARIO
 
 export const deleteUsuario = async (id) => {
   await pool.query(`DELETE FROM usuario_sistema WHERE id_usuario = $1`, [id]);
