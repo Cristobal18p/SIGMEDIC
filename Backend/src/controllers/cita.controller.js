@@ -1,9 +1,5 @@
 import * as CitaModel from "../models/cita.model.js";
-import * as NotificacionModel from "../models/notificacion.model.js";
-import {
-  enviarSolicitudCita,
-  enviarConfirmacionCita,
-} from "../services/email.service.js";
+
 
 export const createCita = async (req, res) => {
   try {
@@ -18,64 +14,6 @@ export const createCita = async (req, res) => {
       throw new Error("Origen de creación inválido");
     }
 
-    // Obtener detalle de la cita para enviar correos
-    try {
-      const detalleCita = await CitaModel.getDetalleCitaPorSeguimiento(
-        nueva.numero_seguimiento
-      );
-
-      if (detalleCita && detalleCita.email_paciente) {
-        // Si fue creado por paciente web, enviar correo de solicitud
-        if (creado_por === "paciente") {
-          await enviarSolicitudCita(detalleCita);
-          await NotificacionModel.createNotificacion({
-            id_cita: nueva.id_cita,
-            tipo_notificacion: "solicitud",
-            email_destinatario: detalleCita.email_paciente,
-            asunto: "Solicitud de cita recibida",
-          });
-        }
-        // Si fue creado por recepción Y tiene fecha/hora, enviar confirmación
-        else if (
-          creado_por === "recepcion" &&
-          detalleCita.fecha_cita &&
-          detalleCita.hora_cita
-        ) {
-          await enviarConfirmacionCita(detalleCita);
-          await NotificacionModel.createNotificacion({
-            id_cita: nueva.id_cita,
-            tipo_notificacion: "confirmacion",
-            email_destinatario: detalleCita.email_paciente,
-            asunto: "Confirmación de cita médica",
-          });
-
-          // Programar recordatorio 24h antes
-          const fechaCita = new Date(
-            `${detalleCita.fecha_cita.split("/").reverse().join("-")}T${
-              detalleCita.hora_cita
-            }`
-          );
-          const fecha24hAntes = new Date(
-            fechaCita.getTime() - 24 * 60 * 60 * 1000
-          );
-
-          await NotificacionModel.createNotificacion({
-            id_cita: nueva.id_cita,
-            tipo_notificacion: "recordatorio_24h",
-            email_destinatario: detalleCita.email_paciente,
-            asunto: "Recordatorio de cita - Mañana",
-            estado: "pendiente",
-            fecha_programada: fecha24hAntes.toISOString(),
-          });
-
-          console.log("✅ Correo de confirmación enviado por recepción");
-          console.log("📅 Recordatorio programado para:", fecha24hAntes);
-        }
-      }
-    } catch (emailError) {
-      console.error("Error al enviar correo:", emailError);
-      // No fallar la creación de cita si falla el correo
-    }
 
     res.status(201).json(nueva);
   } catch (err) {
@@ -162,40 +100,7 @@ export const confirmarCitaController = async (req, res) => {
       return res.status(404).json({ message: "Cita no encontrada" });
     }
 
-    // Enviar correo de confirmación
-    try {
-      const detalleCita = await CitaModel.getDetalleCitaPorSeguimiento(
-        citaConfirmada.numero_seguimiento
-      );
 
-      if (detalleCita) {
-        await enviarConfirmacionCita(detalleCita);
-        await NotificacionModel.createNotificacion({
-          id_cita: citaConfirmada.id_cita,
-          tipo_notificacion: "confirmacion",
-          email_destinatario: detalleCita.email_paciente,
-          asunto: "Confirmación de cita médica",
-        });
-
-        // Programar recordatorio 24h antes
-        const fechaCita = new Date(`${fecha_cita}T${hora_cita}`);
-        const fecha24hAntes = new Date(
-          fechaCita.getTime() - 24 * 60 * 60 * 1000
-        );
-
-        await NotificacionModel.createNotificacion({
-          id_cita: citaConfirmada.id_cita,
-          tipo_notificacion: "recordatorio_24h",
-          email_destinatario: detalleCita.email_paciente,
-          asunto: "Recordatorio de cita - Mañana",
-          estado: "pendiente",
-          fecha_programada: fecha24hAntes.toISOString(),
-        });
-      }
-    } catch (emailError) {
-      console.error("Error al enviar correo de confirmación:", emailError);
-      // No fallar la confirmación si falla el correo
-    }
 
     res.json(citaConfirmada);
   } catch (error) {

@@ -1,4 +1,7 @@
 import express from "express";
+import { verifyToken } from "../middlewares/auth.middleware.js";
+import { validate } from "../middlewares/validate.middleware.js";
+import { createPacienteSchema } from "../schemas/paciente.schema.js";
 import {
   crearPaciente,
   validarPaciente,getPaciente, getPacientes
@@ -8,9 +11,9 @@ const router = express.Router();
 
 
 
-router.post("/", crearPaciente);
+router.post("/", validate(createPacienteSchema), crearPaciente);
 router.post("/validar", validarPaciente);
 router.get("/:cedula", getPaciente);
-router.get("/", getPacientes);
+router.get("/", verifyToken, getPacientes);
 
 export default router;

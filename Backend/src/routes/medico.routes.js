@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyToken } from "../middlewares/auth.middleware.js";
 import {
   getMedicos,
   getDisponibilidadPorMedico,
@@ -10,9 +11,9 @@ import {
 const router = express.Router();
 
 router.get("/", getMedicos);
-router.get("/detalle", getMedicosDetalle);
+router.get("/detalle", verifyToken, getMedicosDetalle);
 router.get("/:id/disponibilidad", getDisponibilidadPorMedico);
-router.post("/", createMedico);
-router.put("/:id", updateMedico);
+router.post("/", verifyToken, createMedico);
+router.put("/:id", verifyToken, updateMedico);
 
 export default router;
