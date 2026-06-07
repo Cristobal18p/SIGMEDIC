@@ -16,7 +16,10 @@ export async function getHistorial(id_consulta: string): Promise<HistorialConsul
 export async function crearHistorial(payload: HistorialConsulta): Promise<HistorialConsulta> {
     const res = await fetch(`${API_URL}/api/historial`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
         body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error("Error al crear historial");
@@ -26,7 +29,10 @@ export async function crearHistorial(payload: HistorialConsulta): Promise<Histor
 export async function actualizarHistorial(id_consulta: string, payload: Partial<HistorialConsulta>): Promise<HistorialConsulta> {
     const res = await fetch(`${API_URL}/api/historial/${id_consulta}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
         body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error("Error al actualizar historial");

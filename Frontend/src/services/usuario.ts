@@ -1,15 +1,18 @@
 import { API_URL } from "../config";
-import { Login } from "../types/login";
+import { Login, LoginResponse } from "../types/login";
 import { Usuario, CrearUsuario, ActualizarUsuario } from "../types/usuario";
 
 // Login - retorna datos de autenticación
 export async function loginUsuario(
   nombre_usuario: string,
   contrasena: string
-): Promise<Login> {
+): Promise<LoginResponse> {
   const res = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify({ nombre_usuario, contrasena }),
   });
 
@@ -25,7 +28,10 @@ export async function loginUsuario(
 export async function getUsuarios(): Promise<Usuario[]> {
   const res = await fetch(`${API_URL}/api/usuarios`, {
     method: "GET",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
   });
 
   if (!res.ok) {
@@ -42,7 +48,10 @@ export async function createUsuario(
 ): Promise<{ usuario?: Usuario } & Usuario> {
   const res = await fetch(`${API_URL}/api/usuarios`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify(data),
   });
 
@@ -61,7 +70,10 @@ export async function updateUsuario(
 ): Promise<Usuario> {
   const res = await fetch(`${API_URL}/api/usuarios/${id_usuario}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify(data),
   });
 

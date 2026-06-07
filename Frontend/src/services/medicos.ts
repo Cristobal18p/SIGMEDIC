@@ -44,7 +44,10 @@ export async function createMedico(data: {
 }): Promise<Medico> {
   const res = await fetch(`${API_URL}/api/medicos`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify(data),
   });
 
@@ -67,7 +70,10 @@ export async function updateMedico(
 ): Promise<Medico> {
   const res = await fetch(`${API_URL}/api/medicos/${id_medico}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify(data),
   });
 

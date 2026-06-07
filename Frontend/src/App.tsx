@@ -8,6 +8,7 @@ import { PortalPaciente } from "./components/PortalPaciente";
 import { Toaster } from "sonner";
 import { Login } from "./types/login";
 import { Button } from "./components/ui/button";
+import { API_URL } from "./config";
 
 type View = "login" | "portal" | "dashboard";
 
@@ -55,7 +56,15 @@ export default function App() {
     localStorage.setItem(VIEW_STORAGE_KEY, "dashboard");
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch(`${API_URL}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include"
+      });
+    } catch (e) {
+      console.error("Error al cerrar sesión", e);
+    }
     setCurrentUser(null);
     setCurrentView("login");
     // Limpiar localStorage

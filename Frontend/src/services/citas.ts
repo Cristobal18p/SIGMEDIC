@@ -13,7 +13,10 @@ export async function getCitas(): Promise<CitaDetalle[]> {
 export async function createCitaRecepcion(cita: CreateCita): Promise<CitaDetalle> {
   const res = await fetch(`${API_URL}/api/citas`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify(cita),
   });
   if (!res.ok) throw new Error("Error al crear cita");
@@ -24,7 +27,10 @@ export async function createCitaRecepcion(cita: CreateCita): Promise<CitaDetalle
 export async function actualizarEstadoCita(id: string, estado: string): Promise<CitaDetalle> {
   const res = await fetch(`${API_URL}/api/citas/${id}/estado`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify({ estado }),
   });
   if (!res.ok) throw new Error("Error al actualizar cita");
@@ -42,7 +48,7 @@ export async function getCitaPorSeguimiento(numero: string) {
 export async function cancelarCita(numero_seguimiento: string, cancelado_por: "paciente" | "recepcion") {
   const res = await fetch(`${API_URL}/api/citas/${numero_seguimiento}/cancelar`, {
     method: "PUT",
-    headers: {
+    credentials: "include", headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ cancelado_por }),
@@ -60,7 +66,7 @@ export async function confirmarCita(
 ): Promise<CitaDetalle> {
   const res = await fetch(`${API_URL}/api/citas/${id_cita}/confirmar`, {
     method: "PUT",
-    headers: {
+    credentials: "include", headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ fecha_cita, hora_cita }),

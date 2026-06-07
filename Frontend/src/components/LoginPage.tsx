@@ -34,16 +34,16 @@ export function LoginPage({ onLogin, onPortalPaciente }: LoginPageProps) {
     }
 
     try {
-      const user = await loginUsuario(username, password);
+      const data = await loginUsuario(username, password);
 
-      if (user.estado !== "activo") {
+      if (data.usuario.estado !== "activo") {
         setError("Usuario inactivo o bloqueado");
         return;
       }
 
       setUsername("");
       setPassword("");
-      onLogin(user);
+      onLogin(data.usuario);
     } catch (err: any) {
       const message =
         err?.message || "Ocurrió un error al intentar iniciar sesión";

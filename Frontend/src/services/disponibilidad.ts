@@ -32,7 +32,7 @@ export async function getDisponibilidadPorMedico(id_medico: string): Promise<Dis
 export async function createDisponibilidad(datos: CrearDisponibilidad): Promise<Disponibilidad> {
     const response = await fetch(`${API_URL}/api/disponibilidad`, {
         method: "POST",
-        headers: {
+        credentials: "include", headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(datos),
@@ -53,7 +53,7 @@ export async function updateDisponibilidad(
 ): Promise<Disponibilidad> {
     const response = await fetch(`${API_URL}/api/disponibilidad/${id}`, {
         method: "PUT",
-        headers: {
+        credentials: "include", headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(datos),

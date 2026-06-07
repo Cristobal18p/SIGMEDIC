@@ -12,7 +12,10 @@ export async function getPacientes(): Promise<Paciente[]> {
 export async function validarPaciente(data: ValidarIdentidad): Promise<{ existe: boolean; paciente?: Paciente }> {
   const res = await fetch(`${API_URL}/api/pacientes/validar`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error("Error al validar paciente");
@@ -33,7 +36,10 @@ export async function getPacientePorCedula(cedula: string): Promise<Paciente | n
 export const crearPaciente = async (data: CreatePaciente) => {
   const response = await fetch(`${API_URL}/api/pacientes`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     body: JSON.stringify(data),
   });
 

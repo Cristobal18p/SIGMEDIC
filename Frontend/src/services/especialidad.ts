@@ -4,7 +4,10 @@ import { Especialidad } from "../types/medico";
 export async function getEspecialidades(): Promise<Especialidad[]> {
     const res = await fetch(`${API_URL}/api/especialidades`, {
         method: "GET",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     if (!res.ok) {

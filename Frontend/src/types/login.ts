@@ -11,3 +11,7 @@ export interface Login {
   id_medico: string; // Solo presente si el usuario es médico
 }
 
+export interface LoginResponse {
+  token: string;
+  usuario: Login;
+}
